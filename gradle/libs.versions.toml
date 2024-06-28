@@ -3,12 +3,30 @@ jdk="17"
 kotlin="1.9.24"
 spring-dependency-management="1.1.5"
 spring-boot="3.3.1"
+commons-lang3="3.14.0"
+hutool="5.8.25"
+mapstruct="1.5.5.Final"
+knife4j-openapi="4.3.0"
+mysql="8.0.33"
+mybatis-plus="3.5.5"
+druid-starter="1.2.21"
+jjwt="0.11.1"
 
 [libraries]
 kotlin-gradle = { module="org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref="kotlin" }
 kotlin-allopen = { module="org.jetbrains.kotlin:kotlin-allopen", version.ref="kotlin" }
 kotlin-noarg = { module="org.jetbrains.kotlin:kotlin-noarg", version.ref="kotlin" }
 spring-boot-gradle = { module="org.springframework.boot:spring-boot-gradle-plugin", version.ref="spring-boot" }
+commons-lang3 = { module="org.apache.commons:commons-lang3", version.ref="commons-lang3" }
+hutool = { module="cn.hutool:hutool-all", version.ref="hutool" }
+knife4j = { module="com.github.xiaoymin:knife4j-spring-boot-starter", version.ref="knife4j-openapi" }
+mapstruct = { module="org.mapstruct:mapstruct", version.ref="mapstruct" }
+mysql = { module="mysql:mysql-connector-java", version.ref="mysql" }
+mybatis-plus = { module="com.baomidou:mybatis-plus-boot-starter", version.ref="mybatis-plus" }
+druid-starter = { module="com.alibaba:druid-spring-boot-starter", version.ref="druid-starter" }
+jjwt-impl= { module="io.jsonwebtoken:jjwt-impl", version.ref="jjwt" }
+jjwt-jackson= { module="io.jsonwebtoken:jjwt-jackson", version.ref="jjwt" }
+jjwt-api= { module="io.jsonwebtoken:jjwt-api", version.ref="jjwt" }
 
 [plugins]
 jvm = { id="org.jetbrains.kotlin.jvm", version.ref="kotlin" }
