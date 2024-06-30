@@ -5,9 +5,10 @@ plugins {
 group = "top.rayc"
 version = "0.0.1-SNAPSHOT"
 
-repositories {
-	mavenCentral()
-}
+//repositories {
+//	maven { setUrl("https://maven.aliyun.com/repository/central") }
+//	mavenCentral()
+//}
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -21,6 +22,7 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	implementation(project(":rayc-infrastructure-utility"))
+	implementation(project(":rayc-user"))
 }
 
 tasks.withType<Test> {

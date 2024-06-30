@@ -38,3 +38,11 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### 忽略的文件 ###
+**/application-local.yml
+**/application-local.yaml
+**/application-dev.yml
+**/application-dev.yaml
+**/application-test.yml
+**/application-test.yaml

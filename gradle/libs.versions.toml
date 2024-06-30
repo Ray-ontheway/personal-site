@@ -8,9 +8,11 @@ hutool="5.8.25"
 mapstruct="1.5.5.Final"
 knife4j-openapi="4.3.0"
 mysql="8.0.33"
-mybatis-plus="3.5.5"
+mybatis-plus="3.5.7"
 druid-starter="1.2.21"
 jjwt="0.11.1"
+jakarta="6.1.0"
+jakarta-jsp="4.0.0"
 
 [libraries]
 kotlin-gradle = { module="org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref="kotlin" }
@@ -21,12 +23,16 @@ commons-lang3 = { module="org.apache.commons:commons-lang3", version.ref="common
 hutool = { module="cn.hutool:hutool-all", version.ref="hutool" }
 knife4j = { module="com.github.xiaoymin:knife4j-spring-boot-starter", version.ref="knife4j-openapi" }
 mapstruct = { module="org.mapstruct:mapstruct", version.ref="mapstruct" }
+mapstruct-proccessor = { module="org.mapstruct:mapstruct-processor", version.ref="mapstruct" }
 mysql = { module="mysql:mysql-connector-java", version.ref="mysql" }
-mybatis-plus = { module="com.baomidou:mybatis-plus-boot-starter", version.ref="mybatis-plus" }
+mybatis-plus = { module="com.baomidou:mybatis-plus-spring-boot3-starter", version.ref="mybatis-plus" }
 druid-starter = { module="com.alibaba:druid-spring-boot-starter", version.ref="druid-starter" }
 jjwt-impl= { module="io.jsonwebtoken:jjwt-impl", version.ref="jjwt" }
 jjwt-jackson= { module="io.jsonwebtoken:jjwt-jackson", version.ref="jjwt" }
 jjwt-api= { module="io.jsonwebtoken:jjwt-api", version.ref="jjwt" }
+jakarta-api = { module="jakarta.servlet:jakarta.servlet-api", version.ref="jakarta" }
+jakarta-jsp = { module="jakarta.servlet.jsp:jakarta.servlet.jsp-api", version.ref="jakarta-jsp" }
+
 
 [plugins]
 jvm = { id="org.jetbrains.kotlin.jvm", version.ref="kotlin" }

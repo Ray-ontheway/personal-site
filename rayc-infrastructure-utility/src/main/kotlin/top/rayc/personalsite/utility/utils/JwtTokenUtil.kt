@@ -5,9 +5,13 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import org.springframework.security.core.Authentication
+import top.rayc.personalsite.utility.logger.LoggerDelegate
 import java.util.Date
+import kotlin.jvm.Throws
 
 object JwtTokenUtil {
+    val log by LoggerDelegate()
+
     fun generateJwtToken(
         jwtSigningKey: String,
         authentication: Authentication,
@@ -29,6 +33,7 @@ object JwtTokenUtil {
             .compact()
     }
 
+    @Throws(RuntimeException::class)
     fun getClaimsFromToken(token: String, jwtSigningKey: String): Claims {
         return runCatching {
             val key = Keys.hmacShaKeyFor(jwtSigningKey.toByteArray())

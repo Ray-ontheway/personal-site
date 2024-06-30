@@ -5,27 +5,31 @@ plugins {
 group = "top.rayc"
 version = "0.0.1-SNAPSHOT"
 
-repositories {
-	mavenCentral()
-}
+//repositories {
+//	maven { setUrl("https://maven.aliyun.com/repository/central") }
+//	mavenCentral()
+//}
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-redis")
-	implementation("org.springframework.boot:spring-boot-starter-security")
-	implementation("org.springframework.boot:spring-boot-starter-mail")
-	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation(libs.hutool)
-	implementation(libs.commons.lang3)
-	implementation(libs.jjwt.impl)
-	implementation(libs.jjwt.jackson)
-	implementation(libs.jjwt.api)
+	api("org.springframework.boot:spring-boot-starter-data-redis")
+	api("org.springframework.boot:spring-boot-starter-security")
+	api("org.springframework.boot:spring-boot-starter-mail")
+	api("org.springframework.boot:spring-boot-starter-validation")
+	api("org.springframework.boot:spring-boot-starter-web")
+	api("org.springframework.boot:spring-boot-starter-aop")
+	api(libs.hutool)
+	api(libs.commons.lang3)
+	api(libs.jakarta.api)
+	api(libs.jakarta.jsp)
+	api(libs.jjwt.impl)
+	api(libs.jjwt.jackson)
+	api(libs.jjwt.api)
 
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	compileOnly("org.projectlombok:lombok")
+	api("com.fasterxml.jackson.module:jackson-module-kotlin")
+	api("org.jetbrains.kotlin:kotlin-reflect")
+
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")

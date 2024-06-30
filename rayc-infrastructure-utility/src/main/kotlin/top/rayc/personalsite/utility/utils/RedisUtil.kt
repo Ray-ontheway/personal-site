@@ -1,6 +1,7 @@
 package top.rayc.personalsite.utility.utils
 
 import cn.hutool.json.JSONUtil
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.stereotype.Component
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit
 class RedisUtil {
     @Autowired
     private lateinit var stringRedisTemplate: StringRedisTemplate
+
 
     fun set(key: String, value: Any, time: Long, timeUnit: TimeUnit) {
         val data = CacheData(data = value, LocalDateTime.now().plusSeconds(timeUnit.toSeconds(time)))
