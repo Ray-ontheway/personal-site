@@ -16,24 +16,24 @@ import top.rayc.personalsite.user.controller.vo.resp.RoleResp
 import top.rayc.personalsite.user.service.impl.RoleService
 import top.rayc.personalsite.utility.vo.BaseResult
 
-@RestController
-@RequestMapping("/role")
+//@RestController
+//@RequestMapping("/role")
 class RoleController(
     @Autowired val roleService: RoleService
 ) {
 
-    @PostMapping
+//    @PostMapping
     fun createRole(@Valid @RequestBody createReq: RoleCreateReq): ResponseEntity<BaseResult<RoleResp>> {
         return roleService.create(createReq)
     }
 
-    @PutMapping
+//    @PutMapping
     fun updateRole(@Valid @RequestBody updateReq: RoleUpdateReq) = roleService.update(updateReq)
 
-    @GetMapping
+//    @GetMapping
     fun findById(@RequestParam id: Long) = roleService.findById(id)
 
-    @GetMapping("/page")
+//    @GetMapping("/page")
     fun page(@RequestParam pageIdx: Int, @RequestParam pageSize: Int) = roleService.pageRole(pageIdx, pageSize)
 
 }
