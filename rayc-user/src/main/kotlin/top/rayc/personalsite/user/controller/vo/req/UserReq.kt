@@ -6,7 +6,7 @@ data class UserCreateReq(
     var email: String,
     var password: String,
     var optCode: String,
-    val roleIds: List<Long>
+    val roleIds: List<Long> = arrayListOf()
 )
 
 data class UserLoginReq (
@@ -23,11 +23,8 @@ data class UserLoginReq (
 data class UserUpdateReq(
     var id: Long,
     var userId: String,
-    var phone: String,
+    var phone: String?,
     var email: String,
-    var password: String,
-    var registered: LocalDateTime,
-    var roleIds: List<Long>
 )
 
 data class RoleCreateReq(

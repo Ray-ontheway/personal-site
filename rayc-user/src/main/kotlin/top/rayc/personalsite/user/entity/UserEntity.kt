@@ -3,7 +3,6 @@ package top.rayc.personalsite.user.entity
 import com.baomidou.mybatisplus.annotation.IdType
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
-import com.fasterxml.jackson.annotation.Nulls
 import java.time.LocalDateTime
 
 @TableName("user_credential")

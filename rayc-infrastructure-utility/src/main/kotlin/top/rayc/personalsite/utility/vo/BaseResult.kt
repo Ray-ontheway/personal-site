@@ -31,5 +31,10 @@ class BaseResult<T> (
         fun <T> error(status: Int = MessageCode.SYSTEM_ERROR.status, msg: String = MessageCode.UN_KNOWN.msg, data: T? = null): BaseResult<T> {
             return BaseResult(status, msg, MDC.get(TRACE_LOG_ID), data)
         }
+
+        fun <T> error(msg: String, data: T? = null): BaseResult<T> {
+            return BaseResult(MessageCode.SYSTEM_ERROR.status, msg, MDC.get(TRACE_LOG_ID), data)
+        }
+
     }
 }

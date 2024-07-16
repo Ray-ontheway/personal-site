@@ -10,6 +10,5 @@ import top.rayc.personalsite.utility.logger.LoggerDelegate
 class RaycApplication
 
 fun main(args: Array<String>) {
-
     runApplication<RaycApplication>(*args)
 }

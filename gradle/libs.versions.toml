@@ -13,6 +13,7 @@ druid-starter="1.2.21"
 jjwt="0.11.1"
 jakarta="6.1.0"
 jakarta-jsp="4.0.0"
+jackson-datatype-jsr310="2.17.2"
 
 [libraries]
 kotlin-gradle = { module="org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref="kotlin" }
@@ -32,6 +33,7 @@ jjwt-jackson= { module="io.jsonwebtoken:jjwt-jackson", version.ref="jjwt" }
 jjwt-api= { module="io.jsonwebtoken:jjwt-api", version.ref="jjwt" }
 jakarta-api = { module="jakarta.servlet:jakarta.servlet-api", version.ref="jakarta" }
 jakarta-jsp = { module="jakarta.servlet.jsp:jakarta.servlet.jsp-api", version.ref="jakarta-jsp" }
+jackson-datatype-jsr310 = { module="com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref="jackson-datatype-jsr310" }
 
 
 [plugins]

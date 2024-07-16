@@ -17,6 +17,7 @@ dependencies {
 	api("org.springframework.boot:spring-boot-starter-validation")
 	api("org.springframework.boot:spring-boot-starter-web")
 	api("org.springframework.boot:spring-boot-starter-aop")
+	api(libs.jackson.datatype.jsr310)
 	api(libs.hutool)
 	api(libs.commons.lang3)
 	api(libs.jakarta.api)
