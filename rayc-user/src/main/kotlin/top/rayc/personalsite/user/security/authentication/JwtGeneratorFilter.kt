@@ -13,6 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 import top.rayc.personalsite.user.controller.vo.req.UserLoginReq
 import top.rayc.personalsite.utility.logger.LoggerDelegate
 import top.rayc.personalsite.utility.utils.JwtTokenUtil
+import top.rayc.personalsite.utility.vo.BaseResult
 import java.nio.charset.StandardCharsets
 import kotlin.jvm.Throws
 
@@ -39,16 +40,22 @@ class JwtGeneratorFilter(
         } catch (e: Exception) {
             log.error("${e.message}", e)
         }
+        log.error("userLoginReq: $userLoginReq")
 
         val authentication = UsernamePasswordAuthenticationToken(userLoginReq.username, userLoginReq.password)
         manager.authenticate(authentication)
 
         val jwtToken = JwtTokenUtil.generateJwtToken(jwtSigningKey, authentication, jwtDuration)
+
+        val data = mapOf("accessToken" to jwtToken, "expires" to jwtDuration)
+
+        val result = BaseResult.success("登录成功", data)
+
         response.apply {
             characterEncoding = StandardCharsets.UTF_8.name()
             contentType = MediaType.APPLICATION_JSON_VALUE
             status = HttpStatus.OK.value()
-            setHeader("Authorization", jwtToken)
+            writer.write(ObjectMapper().writeValueAsString(result))
         }
 
     }

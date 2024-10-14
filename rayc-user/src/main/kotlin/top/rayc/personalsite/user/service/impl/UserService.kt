@@ -46,8 +46,12 @@ class UserService(
     private val userConverter: UserConverter = Mappers.getMapper(UserConverter::class.java)
 
     override fun auth(username: String, password: String): UsernamePasswordAuthentication {
+        logger.error("auth: {}, {}", username, password)
         val storeUser = this.getOne(KtQueryWrapper(User()).eq(User::email, username))
         val encodePassword = passwordEncoder.encode(password)
+        if (storeUser == null) {
+            logger.error("storeUser is null")
+        }
         if (storeUser == null || !passwordEncoder.matches(password, storeUser.password)) {
             throw BadCredentialsException("用户名或密码错误")
         }

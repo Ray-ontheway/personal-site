@@ -13,7 +13,7 @@ class HomeController {
     fun hello(): String {
         log.error("使用Slf4j + Kotlin 委托 实现一个日志工具简单化使用")
 
-        return "hello"
+        return "hello world devtool"
     }
 
 }
