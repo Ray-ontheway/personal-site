@@ -10,6 +10,7 @@ import top.rayc.personalsite.article.controller.vo.resp.ArticleTypeResp
 import top.rayc.personalsite.article.service.impl.ArticleTypeService
 import top.rayc.personalsite.utility.vo.BaseResult
 
+@RestController
 @RequestMapping("/article/type")
 class ArticleTypeController(
     @Autowired val articleTypeService: ArticleTypeService

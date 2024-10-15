@@ -1,5 +1,6 @@
 package top.rayc.personalsite.article.service.impl
 
+import cn.hutool.core.util.IdUtil
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import org.mapstruct.factory.Mappers
@@ -13,6 +14,7 @@ import top.rayc.personalsite.article.entity.ArticleTag
 import top.rayc.personalsite.article.mapper.ArticleTagMapper
 import top.rayc.personalsite.article.service.IArticleTagService
 import top.rayc.personalsite.utility.logger.LoggerDelegate
+import top.rayc.personalsite.utility.utils.IdUtils
 import top.rayc.personalsite.utility.vo.BaseResult
 
 @Service
@@ -22,14 +24,15 @@ class ArticleTagService() : ServiceImpl<ArticleTagMapper, ArticleTag>(), IArticl
 
     override fun createTag(tagReq: ArticleTagCreate): ResponseEntity<BaseResult<ArticleTagResp>> {
         val tag = articleConverter.convertFromCreateReq(tagReq)
+        tag.uid = IdUtil.objectId()
         this.save(tag)
-        val fullTag = this.getOne(KtQueryWrapper(ArticleTag()).eq(ArticleTag::id, tag.id))
+        val fullTag = this.getOne(KtQueryWrapper(ArticleTag::class.java).eq(ArticleTag::id, tag.id))
         return ResponseEntity.ok(BaseResult.success("新增成功", articleConverter.convertToResp(fullTag!!)))
     }
 
     override fun updateTag(tagUpdate: ArticleTagUpdate): ResponseEntity<BaseResult<ArticleTagResp>> {
         val tag = articleConverter.convertFromUpdateReq(tagUpdate)
-        val tagWrapper = KtQueryWrapper(ArticleTag()).eq(ArticleTag::id, tag.id)
+        val tagWrapper = KtQueryWrapper(ArticleTag::class.java).eq(ArticleTag::id, tag.id)
         this.update(tag, tagWrapper)
         val fullTag = this.getOne(tagWrapper)
         return ResponseEntity.ok(BaseResult.success("更新成功", articleConverter.convertToResp(fullTag!!)))

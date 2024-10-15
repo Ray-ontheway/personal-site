@@ -11,65 +11,67 @@ import java.time.LocalDateTime
 @TableName("article_type")
 data class ArticleType(
     @TableId(type = IdType.AUTO)
-    var id: Long? = null,
+    var id: Long? = 0,
     @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-    var uid: String? = null,
-    var name: String? = null,
-    var catKey: String? = null,
+    var uid: String?,
+    var name: String?,
+    var catKey: String?,
     @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-    var description: String? = null,
+    var description: String?,
     @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-    var visitedCount: Int? = null,
+    var visitedCount: Int?,
     @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-    var isDeleted: Boolean? = null,
+    var isDeleted: Boolean?,
+
     @TableField(fill = FieldFill.INSERT)
-    var createAt: LocalDateTime? = null,
+    var createAt: LocalDateTime?,
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    var updateAt: LocalDateTime? = null,
+    var updateAt: LocalDateTime?,
 )
 
 @TableName("article_tag")
 data class ArticleTag(
     @TableId(type = IdType.AUTO)
-    var id: Long? = null,
+    var id: Long? = 0,
     @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-    var uid: String? = null,
-    var name: String? = null,
-    var catKey: String? = null,
+    var uid: String?,
+    var name: String?,
+    var catKey: String?,
     @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-    var description: String? = null,
+    var description: String?,
     @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-    var visitedCount: Int? = null,
+    var visitedCount: Int?,
     @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-    var isDeleted: Boolean? = null,
+    var isDeleted: Boolean?,
+
     @TableField(fill = FieldFill.INSERT)
-    var createAt: LocalDateTime? = null,
+    var createAt: LocalDateTime? ,
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    var updateAt: LocalDateTime? = null
+    var updateAt: LocalDateTime?
 )
 
 @TableName("article")
 data class Article(
     @TableId(type = IdType.AUTO)
-    var id: Long? = null,
+    var id: Long? = 0,
     @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-    var uid: String? = null,
-    var title: String? = null,
-    var summary: String? = null,
-    var content: String? = null,
+    var uid: String?,
+    var title: String?,
+    var summary: String?,
+    var content: String?,
     @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-    var typeId: Long? = null,
+    var typeId: Long?,
     @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-    var tags: List<String>? = null,
-    var categoryId: Long? = null,
-    var publishAt: LocalDateTime? = null,
-    var createBy: Long? = null,
-    var visitedCount: Int = 0,
-    var isDeleted: Boolean = false,
+    var tags: List<String>?,
+    var categoryId: Long?,
+    var publishAt: LocalDateTime?,
+    var createBy: Long?,
+    var visitedCount: Int?,
+    var isDeleted: Boolean?,
     @TableField(fill = FieldFill.INSERT)
-    var createAt: LocalDateTime? = null,
+    var createAt: LocalDateTime?,
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    var updateAt: LocalDateTime? = null,
+    var updateAt: LocalDateTime?,
 )
 
 @TableName("article_category")

@@ -1,5 +1,6 @@
 package top.rayc.personalsite.article.service.impl
 
+import cn.hutool.core.util.IdUtil
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import org.mapstruct.factory.Mappers
@@ -22,14 +23,15 @@ class ArticleTypeService: ServiceImpl<ArticleTypeMapper, ArticleType>(), IArticl
 
     override fun createType(typeReq: ArticleTypeCreate): ResponseEntity<BaseResult<ArticleTypeResp>> {
         val type = articleTypeConverter.convertFromCreateReq(typeReq)
+        type.uid = IdUtil.objectId()
         this.save(type)
-        val fullType = this.getOne(KtQueryWrapper(ArticleType()).eq(ArticleType::id, type.id))
+        val fullType = this.getOne(KtQueryWrapper(ArticleType::class.java).eq(ArticleType::id, type.id))
         return ResponseEntity.ok(BaseResult.success("新增分类成功", articleTypeConverter.convertToResp(fullType!!)))
     }
 
     override fun updateType(typeUpdate: ArticleTypeUpdate): ResponseEntity<BaseResult<ArticleTypeResp>> {
         val type = articleTypeConverter.convertFromUpdateReq(typeUpdate)
-        val typeWrapper = KtQueryWrapper(ArticleType()).eq(ArticleType::id, type.id)
+        val typeWrapper = KtQueryWrapper(ArticleType::class.java).eq(ArticleType::id, type.id)
         this.update(type, typeWrapper)
         val fullType = this.getOne(typeWrapper)
         return ResponseEntity.ok(BaseResult.success("更新分类成功", articleTypeConverter.convertToResp(fullType!!)))

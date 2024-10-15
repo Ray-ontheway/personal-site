@@ -23,6 +23,7 @@ dependencies {
 
 	implementation(project(":rayc-infrastructure-utility"))
 	implementation(project(":rayc-user"))
+	implementation(project(":rayc-article"))
 }
 
 tasks.withType<Test> {

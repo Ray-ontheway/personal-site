@@ -20,6 +20,7 @@ interface ArticleTypeConverter {
     fun convertToRepsList(articleTypes: List<ArticleType>): List<ArticleTypeResp>
 }
 
+@Mapper(componentModel = "spring")
 interface ArticleTagConverter {
     fun convertFromCreateReq(createReq: ArticleTagCreate): ArticleTag
     fun convertFromUpdateReq(createReq: ArticleTagUpdate): ArticleTag
