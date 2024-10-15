@@ -2,12 +2,27 @@ package top.rayc.personalsite.article.controller.vo.req
 
 data class ArticleTypeCreate (
     val name: String,
+    val catKey: String,
+    val description: String,
+)
+data class ArticleTypeUpdate (
+    val id: Long,
+    val uid: Long,
+    val name: String,
+    val catKey: String,
     val description: String
 )
 
-data class ArticleTypeUpdate (
-    val id: Long,
+data class ArticleTagCreate (
     val name: String,
+    val catKey: String,
+    val description: String,
+)
+data class ArticleTagUpdate (
+    val id: Long,
+    val uid: Long,
+    val name: String,
+    val catKey: String,
     val description: String
 )
 
@@ -15,11 +30,10 @@ data class ArticleCreate (
     val title: String,
     val summary: String,
     val content: String,
+    val cover: String? = null,
     val typeId: Long,
-    val tags: List<String>,
     val tagIds: List<Long>,
-    val categoryId: Long?, 
-    var isPublish: Boolean = false
+    val isPublish: Boolean = true
 )
 
 data class ArticleUpdate (
@@ -27,19 +41,20 @@ data class ArticleUpdate (
     val title: String,
     val summary: String,
     val content: String,
+    val cover: String? = null,
     val typeId: Long,
-    val tags: List<String>,
     val tagIds: List<Long>,
-    val categoryId: Long?,
-    var isPublish: Boolean = false
+    val isPublish: Boolean = true
 )
 
+@Deprecated("暂时不用")
 data class ArticleCategoryCreate (
     val name: String,
     val summary: String,
     val coverUri: String? = null,
 )
 
+@Deprecated("暂时不用")
 data class ArticleCategoryUpdate (
     val id: Long,
     val name: String,

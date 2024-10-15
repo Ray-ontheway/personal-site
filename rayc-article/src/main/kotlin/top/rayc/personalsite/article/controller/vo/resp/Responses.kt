@@ -29,3 +29,25 @@ data class ArticleCategoryResp (
     val articleCount: Int = 0,
     val createBy: UserResp
 )
+
+data class ArticleTagResp (
+    val id: Long,
+    val uid: String,
+    val name: String,
+    val catKey: String,
+    val description: String,
+    val visitedCount: Int = 0,
+    val createAt: LocalDateTime? = null,
+    val updateAt: LocalDateTime? = null,
+)
+
+data class ArticleTypeResp (
+    val id: Long,
+    val uid: String,
+    val name: String,
+    val catKey: String,
+    val description: String? = null,
+    val visitedCount: Int,
+    val createAt: LocalDateTime,
+    val updateAt: LocalDateTime,
+)

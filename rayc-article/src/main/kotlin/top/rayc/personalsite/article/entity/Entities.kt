@@ -1,6 +1,9 @@
 package top.rayc.personalsite.article.entity
 
+import com.baomidou.mybatisplus.annotation.FieldFill
+import com.baomidou.mybatisplus.annotation.FieldStrategy
 import com.baomidou.mybatisplus.annotation.IdType
+import com.baomidou.mybatisplus.annotation.TableField
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
 import java.time.LocalDateTime
@@ -9,24 +12,39 @@ import java.time.LocalDateTime
 data class ArticleType(
     @TableId(type = IdType.AUTO)
     var id: Long? = null,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     var uid: String? = null,
     var name: String? = null,
+    var catKey: String? = null,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     var description: String? = null,
-    var visitedCount: Int = 0,
-    var isDeleted: Boolean = false,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
+    var visitedCount: Int? = null,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
+    var isDeleted: Boolean? = null,
+    @TableField(fill = FieldFill.INSERT)
     var createAt: LocalDateTime? = null,
-    var updateAt: LocalDateTime? = null
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    var updateAt: LocalDateTime? = null,
 )
 
 @TableName("article_tag")
 data class ArticleTag(
     @TableId(type = IdType.AUTO)
     var id: Long? = null,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     var uid: String? = null,
     var name: String? = null,
-    var visitedCount: Int = 0,
-    var isDeleted: Boolean = false,
+    var catKey: String? = null,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
+    var description: String? = null,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
+    var visitedCount: Int? = null,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
+    var isDeleted: Boolean? = null,
+    @TableField(fill = FieldFill.INSERT)
     var createAt: LocalDateTime? = null,
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     var updateAt: LocalDateTime? = null
 )
 
@@ -34,19 +52,24 @@ data class ArticleTag(
 data class Article(
     @TableId(type = IdType.AUTO)
     var id: Long? = null,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     var uid: String? = null,
     var title: String? = null,
     var summary: String? = null,
     var content: String? = null,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     var typeId: Long? = null,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     var tags: List<String>? = null,
     var categoryId: Long? = null,
     var publishAt: LocalDateTime? = null,
     var createBy: Long? = null,
     var visitedCount: Int = 0,
     var isDeleted: Boolean = false,
+    @TableField(fill = FieldFill.INSERT)
     var createAt: LocalDateTime? = null,
-    var updateAt: LocalDateTime? = null
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    var updateAt: LocalDateTime? = null,
 )
 
 @TableName("article_category")
