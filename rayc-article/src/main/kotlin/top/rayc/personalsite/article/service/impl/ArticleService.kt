@@ -1,5 +1,6 @@
 package top.rayc.personalsite.article.service.impl
 
+import cn.hutool.core.util.IdUtil
 import com.baomidou.mybatisplus.core.metadata.IPage
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page
@@ -39,24 +40,34 @@ class ArticleService(
     private val userConverter = Mappers.getMapper(UserConverter::class.java)
 
     private fun transformArticleToResp(article: Article): ArticleResp {
+        log.error("查询文章: $article")
         val tagIds = articleTagLinkService.list(KtQueryWrapper(ArticleTagLink::class.java).eq(ArticleTagLink::articleId, article.id)).map { it.tagId }
         val tags = articleTagService.listByIds(tagIds).map { articleTagConverter.convertToResp(it) }
+        log.error("查询tag文章成功: $tags")
+
         val type = articleTypeService.getById(article.typeId)?.let { articleTypeConverter.convertToResp(it) }
+        log.error("查询type文章成功: $type")
+
         val articleResp = articleConverter.convertToResp(article)
+        log.error("查询article文章成功: $articleResp")
         articleResp.tags = tags
         articleResp.type = type
         articleResp.author = userService.getById(article.createBy)?.let { userConverter.convertToResp(it) }
+        log.error("查询article文章成功")
+
         return articleResp
     }
 
     private fun findArticleById(id: Long): ArticleResp {
         val article = this.getById(id) ?: throw RuntimeException("文章不存在")
+        log.error("查询文章成功: $article")
         return transformArticleToResp(article)
     }
 
     @Transactional(rollbackFor = [Exception::class])
     override fun createArticle(articleCreate: ArticleCreate): ResponseEntity<BaseResult<ArticleResp>> {
         val article = articleConverter.convertFromCreateReq(articleCreate)
+        article.uid = IdUtil.objectId()
         val currentUser = userService.curUser().let { userConverter.convertToResp(it) }
         article.createBy = currentUser.id
         if (!this.save(article)) {
@@ -66,12 +77,15 @@ class ArticleService(
         if (!articleTagLinkService.saveBatch(articleTags)) {
             throw RuntimeException("新增文章失败")
         }
+        log.error("新增文章成功")
         return ResponseEntity.ok().body(BaseResult.success("新增文章成功", findArticleById(article.id!!)))
     }
 
     @Transactional(rollbackFor = [Exception::class])
     override fun updateArticle(articleUpdate: ArticleUpdate): ResponseEntity<BaseResult<ArticleResp>> {
+        log.error("更新文章: $articleUpdate")
         val article = articleConverter.convertFromUpdateReq(articleUpdate)
+        log.error("更新文章: $article")
         this.updateById(article)
         val existTagsLink = articleTagLinkService.list(KtQueryWrapper(ArticleTagLink::class.java).eq(ArticleTagLink::articleId, article.id))
         val waitToDeleteTagLink = existTagsLink.filter { !articleUpdate.tagIds.contains(it.tagId) }
@@ -89,6 +103,7 @@ class ArticleService(
 
     @Transactional(rollbackFor = [Exception::class])
     override fun deleteArticle(id: Long): ResponseEntity<BaseResult<String>> {
+        log.error("删除文章: $id")
         this.removeById(id)
         articleTagLinkService.remove(KtQueryWrapper(ArticleTagLink::class.java).eq(ArticleTagLink::articleId, id))
         return ResponseEntity.ok().body(BaseResult.success("删除成功"))
@@ -102,6 +117,7 @@ class ArticleService(
     override fun pageArticles(page: Int, size: Int): ResponseEntity<BaseResult<PageObject<ArticleResp>>> {
         val articlePage = this.page(Page<Article>(page.toLong(), size.toLong()))
         val articleResps = articlePage.records.map { transformArticleToResp(it) }
+
         return ResponseEntity.ok(BaseResult.success("查询成功", PageObject(page, size, articlePage.total, articleResps)))
     }
 

@@ -15,9 +15,9 @@ data class ArticleResp (
     val content: String,
     val cover: String?,
     var type: ArticleTypeResp?,
-    var tags: List<ArticleTagResp>,
-    val visitedCount: Int = 0,
-    val isPublish: Boolean = false,
+    var tags: List<ArticleTagResp>?,
+    val visitedCount: Int,
+    var isPublished: Boolean?,
     var author: UserResp?,
     val updateAt: LocalDateTime,
 )

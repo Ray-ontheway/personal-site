@@ -35,7 +35,7 @@ class ArticleController(
         return articleService.updateArticle(articleUpdate)
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     fun deleteArticle(@PathVariable("id") id: Long): ResponseEntity<BaseResult<String>> {
         return articleService.deleteArticle(id)
     }

@@ -33,7 +33,7 @@ data class ArticleCreate (
     val cover: String? = null,
     val typeId: Long,
     val tagIds: List<Long>,
-    val isPublish: Boolean = true
+    val isPublished: Boolean = true
 )
 
 data class ArticleUpdate (
@@ -41,11 +41,10 @@ data class ArticleUpdate (
     val title: String,
     val summary: String,
     val content: String,
-    val cover: String? = null,
+    val cover: String?,
     val typeId: Long,
     val tagIds: List<Long>,
-    val isPublish: Boolean = true,
-    val createBy: Long,
+    val isPublish: Boolean?,
 )
 
 @Deprecated("暂时不用")

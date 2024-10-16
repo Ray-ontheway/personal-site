@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.IdType
 import com.baomidou.mybatisplus.annotation.TableField
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
+import org.apache.ibatis.type.JdbcType
 import java.time.LocalDateTime
 
 @TableName("article_type")
@@ -61,14 +62,21 @@ data class Article(
     var content: String?,
     @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     var typeId: Long?,
-    var publishAt: LocalDateTime?,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     var createBy: Long?,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     var visitedCount: Int?,
-    var isDeleted: Boolean? = false,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL, jdbcType = JdbcType.TINYINT)
+    var isPublished: Boolean?,
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL, jdbcType = JdbcType.TINYINT)
+    var isDeleted: Boolean?,
     @TableField(fill = FieldFill.INSERT)
     var createAt: LocalDateTime?,
     @TableField(fill = FieldFill.INSERT_UPDATE)
     var updateAt: LocalDateTime?,
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    var publishAt: LocalDateTime?,
+
 )
 
 @TableName("article_type_link")

@@ -15,7 +15,7 @@ import top.rayc.personalsite.utility.utils.JwtTokenUtil
 class JwtValidatorFilter: OncePerRequestFilter() {
     private val TOKEN_HEADER_KEY = "Authorization"
     private val LOGIN_PATH = "/login"
-    private val AUTHORIZATION_PREFIX = "Bearer "
+    private val AUTHORIZATION_PREFIX = "Bearer"
 
     val log by LoggerDelegate()
 
@@ -28,8 +28,8 @@ class JwtValidatorFilter: OncePerRequestFilter() {
         filterChain: FilterChain
     ) {
         val claims = try {
-            log.error("response.header: ${response.getHeader(TOKEN_HEADER_KEY)}")
-            JwtTokenUtil.getClaimsFromToken(response.getHeader(TOKEN_HEADER_KEY).substring(7), jwtSigningKey)
+            log.error("response.header: ${request.getHeader(TOKEN_HEADER_KEY)}")
+            JwtTokenUtil.getClaimsFromToken(request.getHeader(TOKEN_HEADER_KEY).substring(7), jwtSigningKey)
         } catch (e: Exception) {
             null
         }
@@ -46,16 +46,18 @@ class JwtValidatorFilter: OncePerRequestFilter() {
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
         log.error("request.path: ${request.servletPath}")
         log.error("bearerToken: ${request.getHeader(TOKEN_HEADER_KEY)}")
+        log.error(request.getHeader(TOKEN_HEADER_KEY))
 
         val bearerToken =  request.getHeader(TOKEN_HEADER_KEY) ?: return true
-        if (bearerToken.isBlank() || bearerToken.startsWith(AUTHORIZATION_PREFIX)) {
-            return true
-        }
+//        if (bearerToken.isBlank() || bearerToken.startsWith(AUTHORIZATION_PREFIX)) {
+//            return true
+//        }
         val servletPath = request.servletPath
         if (servletPath.contains("druid") || servletPath.contains("doc.html") || LOGIN_PATH == servletPath) {
             return true
         }
-        return JwtTokenUtil.validateToken(bearerToken.substring(7), jwtSigningKey)
+        log.error("准备验证: $bearerToken")
+        return !JwtTokenUtil.validateToken(bearerToken.substring(7), jwtSigningKey)
 
     }
 }
