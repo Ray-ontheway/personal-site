@@ -28,6 +28,7 @@ class JwtValidatorFilter: OncePerRequestFilter() {
         filterChain: FilterChain
     ) {
         val claims = try {
+            log.error("response.header: ${response.getHeader(TOKEN_HEADER_KEY)}")
             JwtTokenUtil.getClaimsFromToken(response.getHeader(TOKEN_HEADER_KEY).substring(7), jwtSigningKey)
         } catch (e: Exception) {
             null
@@ -44,6 +45,8 @@ class JwtValidatorFilter: OncePerRequestFilter() {
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
         log.error("request.path: ${request.servletPath}")
+        log.error("bearerToken: ${request.getHeader(TOKEN_HEADER_KEY)}")
+
         val bearerToken =  request.getHeader(TOKEN_HEADER_KEY) ?: return true
         if (bearerToken.isBlank() || bearerToken.startsWith(AUTHORIZATION_PREFIX)) {
             return true

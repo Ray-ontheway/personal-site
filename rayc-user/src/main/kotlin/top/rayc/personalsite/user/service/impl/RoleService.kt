@@ -1,11 +1,9 @@
 package top.rayc.personalsite.user.service.impl
 
 import com.baomidou.mybatisplus.core.metadata.IPage
-import com.baomidou.mybatisplus.extension.kotlin.KtQueryChainWrapper
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
-import com.fasterxml.jackson.databind.ser.Serializers.Base
 import org.mapstruct.factory.Mappers
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -35,7 +33,7 @@ class RoleService(
     @Autowired val rolePermissionMapper: RolePermissionMapper,
     @Autowired val userRoleMapper: UserRoleMapper,
 ): ServiceImpl<RoleMapper, Role>(), IRoleService {
-    val log by LoggerDelegate()
+    val logger by LoggerDelegate()
     private val roleConverter: RoleConverter = Mappers.getMapper(RoleConverter::class.java)
 
     @Transactional

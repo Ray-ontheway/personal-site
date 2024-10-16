@@ -20,6 +20,17 @@ dependencies {
     implementation(project(":rayc-user"))
 }
 
+tasks.withType<Jar> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+kapt {
+    arguments {
+        arg("mapstruct.defaultComponentModel", "spring")
+        arg("mapstruct.unmappedTargetPolicy", "IGNORE")
+    }
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
 }

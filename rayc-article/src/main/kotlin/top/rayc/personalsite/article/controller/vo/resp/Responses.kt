@@ -1,5 +1,6 @@
 package top.rayc.personalsite.article.controller.vo.resp
 
+import top.rayc.personalsite.article.entity.ArticleTag
 import top.rayc.personalsite.article.entity.ArticleType
 import top.rayc.personalsite.user.controller.vo.resp.UserResp
 import top.rayc.personalsite.user.entity.User
@@ -8,14 +9,17 @@ import java.time.LocalDateTime
 
 data class ArticleResp (
     val id: Long,
+    val uid: String,
     val title: String,
     val summary: String,
     val content: String,
-    val type: ArticleType,
-    val tags: List<String>,
-    val categoryId: Long? = null,
+    val cover: String?,
+    var type: ArticleTypeResp?,
+    var tags: List<ArticleTagResp>,
+    val visitedCount: Int = 0,
     val isPublish: Boolean = false,
-    val createBy: User
+    var author: UserResp?,
+    val updateAt: LocalDateTime,
 )
 
 data class ArticleCategoryResp (

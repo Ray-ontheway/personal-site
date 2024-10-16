@@ -1,10 +1,7 @@
 package top.rayc.personalsite.user.service.impl
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper
 import com.baomidou.mybatisplus.core.metadata.IPage
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
-import com.baomidou.mybatisplus.extension.kotlin.KtUpdateWrapper
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
 import org.mapstruct.factory.Mappers
@@ -170,6 +167,13 @@ class UserService(
                 it
             }
         return userResp
+    }
+
+    fun curUser(): User {
+        val authentication = SecurityContextHolder.getContext().authentication
+        val email = authentication.principal as String
+        logger.error("curUser: {}", email)
+        return this.getOne(KtQueryWrapper(User()).eq(User::email, email))
     }
 
     override fun currentUserResp(): ResponseEntity<BaseResult<UserResp>> {

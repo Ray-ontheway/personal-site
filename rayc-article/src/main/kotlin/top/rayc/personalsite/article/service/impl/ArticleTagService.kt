@@ -14,7 +14,6 @@ import top.rayc.personalsite.article.entity.ArticleTag
 import top.rayc.personalsite.article.mapper.ArticleTagMapper
 import top.rayc.personalsite.article.service.IArticleTagService
 import top.rayc.personalsite.utility.logger.LoggerDelegate
-import top.rayc.personalsite.utility.utils.IdUtils
 import top.rayc.personalsite.utility.vo.BaseResult
 
 @Service

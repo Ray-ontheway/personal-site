@@ -61,17 +61,29 @@ data class Article(
     var content: String?,
     @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     var typeId: Long?,
-    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
-    var tags: List<String>?,
-    var categoryId: Long?,
     var publishAt: LocalDateTime?,
     var createBy: Long?,
     var visitedCount: Int?,
-    var isDeleted: Boolean?,
+    var isDeleted: Boolean? = false,
     @TableField(fill = FieldFill.INSERT)
     var createAt: LocalDateTime?,
     @TableField(fill = FieldFill.INSERT_UPDATE)
     var updateAt: LocalDateTime?,
+)
+
+@TableName("article_type_link")
+data class ArticleTypeLink(
+    @TableId(type = IdType.AUTO)
+    var id: Long? = 0,
+    var typeId: Long?,
+    var articleId: Long?
+)
+@TableName("article_tag_link")
+data class ArticleTagLink(
+    @TableId(type = IdType.AUTO)
+    var id: Long? = 0,
+    var tagId: Long?,
+    var articleId: Long?
 )
 
 @TableName("article_category")
@@ -90,20 +102,8 @@ data class ArticleCategory (
     var isDeleted: Boolean = false
 )
 
-@TableName("article_type_link")
-data class ArticleTypeLink(
-    @TableId(type = IdType.AUTO)
-    var id: Long? = null,
-    var typeId: Long? = null,
-    var articleId: Long? = null
-)
-@TableName("article_tag_link")
-data class ArticleTagLink(
-    @TableId(type = IdType.AUTO)
-    var id: Long? = null,
-    var tagId: Long? = null,
-    var articleId: Long? = null
-)
+
+
 @TableName("article_category_link")
 data class ArticleCategoryLink(
     @TableId(type = IdType.AUTO)

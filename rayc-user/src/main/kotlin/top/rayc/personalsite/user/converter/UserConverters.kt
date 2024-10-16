@@ -13,10 +13,6 @@ import top.rayc.personalsite.user.entity.User
 
 @Mapper(componentModel = "spring")
 interface RoleConverter {
-//    companion object {
-//        val INSTANCE: RoleConverter
-//            get() = Mappers.getMapper(RoleConverter::class.java)
-//    }
 
     fun convertFromCreateReq(createReq: RoleCreateReq): Role
     fun convertFromUpdateReq(createReq: RoleUpdateReq): Role
@@ -28,10 +24,6 @@ interface RoleConverter {
 
 @Mapper(componentModel = "spring")
 interface UserConverter {
-//    companion object {
-//        val INSTANCE: UserConverter
-//            get() = Mappers.getMapper(UserConverter::class.java)
-//    }
 
     fun convertFromCreateReq(createReq: UserCreateReq): User
     fun convertFromUpdateReq(updateReq: UserUpdateReq): User

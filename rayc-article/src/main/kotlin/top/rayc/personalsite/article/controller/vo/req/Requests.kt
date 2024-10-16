@@ -7,7 +7,7 @@ data class ArticleTypeCreate (
 )
 data class ArticleTypeUpdate (
     val id: Long,
-    val uid: Long,
+    val uid: String,
     val name: String,
     val catKey: String,
     val description: String
@@ -20,7 +20,7 @@ data class ArticleTagCreate (
 )
 data class ArticleTagUpdate (
     val id: Long,
-    val uid: Long,
+    val uid: String,
     val name: String,
     val catKey: String,
     val description: String
@@ -44,7 +44,8 @@ data class ArticleUpdate (
     val cover: String? = null,
     val typeId: Long,
     val tagIds: List<Long>,
-    val isPublish: Boolean = true
+    val isPublish: Boolean = true,
+    val createBy: Long,
 )
 
 @Deprecated("暂时不用")

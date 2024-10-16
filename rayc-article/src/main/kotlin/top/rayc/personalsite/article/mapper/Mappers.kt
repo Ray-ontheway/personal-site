@@ -18,6 +18,3 @@ interface ArticleTypeLinkMapper : BaseMapper<ArticleTypeLink> {}
 
 @Mapper
 interface ArticleTagLinkMapper : BaseMapper<ArticleTagLink> {}
-
-@Mapper
-interface ArticleCategoryLinkMapper : BaseMapper<ArticleCategoryLink> {}
