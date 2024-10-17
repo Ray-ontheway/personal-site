@@ -6,7 +6,8 @@ import org.springframework.security.core.GrantedAuthority
 class UsernamePasswordAuthentication(
     principal: Any,
     credentials: Any?,
-    authorities: Collection<out GrantedAuthority>? = null
+    authorities: Collection<out GrantedAuthority>? = null,
+    userId: Long? = null
 ): UsernamePasswordAuthenticationToken(
     principal, credentials, authorities
 ) {

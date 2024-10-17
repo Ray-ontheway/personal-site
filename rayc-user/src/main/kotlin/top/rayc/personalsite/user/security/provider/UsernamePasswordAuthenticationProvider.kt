@@ -12,7 +12,7 @@ import top.rayc.personalsite.user.service.impl.UserService
 class UsernamePasswordAuthenticationProvider(
     @Autowired val userService: UserService
 ): AuthenticationProvider {
-    override fun authenticate(authentication: Authentication): Authentication {
+    override fun authenticate(authentication: Authentication): UsernamePasswordAuthentication {
         val username = authentication.principal as String
         val password = authentication.credentials as String
         return userService.auth(username, password)

@@ -38,8 +38,8 @@ class RoleService(
 
     @Transactional
     override fun create(createReq: RoleCreateReq): ResponseEntity<BaseResult<RoleResp>> {
-        val storedUser = this.getOne(KtQueryWrapper(Role()).eq(Role::roleName, createReq.roleName))
-        if (storedUser != null) {
+        val storedRole = this.getOne(KtQueryWrapper(Role::class.java).eq(Role::roleName, createReq.roleName))
+        if (storedRole != null) {
             throw RuntimeException("角色已经存在")
         }
         val newRole = roleConverter.convertFromCreateReq(createReq)
@@ -63,9 +63,7 @@ class RoleService(
     fun findPermissionsById(roleId: Long): List<Permission> {
         return rolePermissionMapper.selectList(KtQueryWrapper(RolePermission()).eq(RolePermission::roleId, roleId))
             .map { it.permissionId }
-            .let {
-                permissionMapper.selectBatchIds(it)
-            }
+            .let { permissionMapper.selectBatchIds(it) }
     }
 
 

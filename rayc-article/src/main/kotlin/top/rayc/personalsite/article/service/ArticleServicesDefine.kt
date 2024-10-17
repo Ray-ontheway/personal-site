@@ -40,4 +40,8 @@ interface IArticleService {
     fun articleDetail(uid: String): ResponseEntity<BaseResult<ArticleResp>>
 
     fun pageArticles(page: Int, size: Int): ResponseEntity<BaseResult<PageObject<ArticleResp>>>
+
+    fun articleDrafts(): ResponseEntity<BaseResult<List<ArticleResp>>>
+
+    fun articleEssayPage(pageIdx: Long, pageSize: Long): ResponseEntity<BaseResult<PageObject<ArticleResp>>>
 }

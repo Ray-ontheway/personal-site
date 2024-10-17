@@ -1,10 +1,12 @@
-package top.rayc.personalsite.utility.utils
+package top.rayc.personalsite.user.security
 
 import io.jsonwebtoken.Claims
+import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import org.springframework.security.core.Authentication
+import top.rayc.personalsite.user.entity.User
 import top.rayc.personalsite.utility.logger.LoggerDelegate
 import java.util.Date
 import kotlin.jvm.Throws
@@ -20,25 +22,27 @@ object JwtTokenUtil {
         val signedAt = System.currentTimeMillis()
         val expireAt = signedAt + jwtDuration
 
-        val claims = Jwts.claims().apply {
-            put("role", authentication.authorities.map { it.authority })
-            subject = authentication.principal as String
-            issuedAt = Date(signedAt)
-            expiration = Date(expireAt)
-        }
+        val claims = mapOf(
+            "sub" to authentication.principal as String,
+            "role" to authentication.authorities.map { it.authority },
+            "userId" to (authentication.details as User).id
+        )
+
         val key = Keys.hmacShaKeyFor(jwtSigningKey.toByteArray())
         return Jwts.builder()
             .setClaims(claims)
+            .setIssuedAt(Date(signedAt))
+            .setExpiration(Date(expireAt))
             .signWith(key, SignatureAlgorithm.HS256)
             .compact()
     }
 
-    @Throws(RuntimeException::class)
+    @Throws(JwtException::class)
     fun getClaimsFromToken(token: String, jwtSigningKey: String): Claims {
         return runCatching {
             val key = Keys.hmacShaKeyFor(jwtSigningKey.toByteArray())
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).body
-        }.getOrElse { throw RuntimeException("invalid token") }
+        }.getOrElse { throw JwtException("invalid token") }
     }
 
     fun validateToken(token: String, jwtSigningKey: String): Boolean {

@@ -9,13 +9,15 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import top.rayc.personalsite.utility.logger.LoggerDelegate
-import top.rayc.personalsite.utility.utils.JwtTokenUtil
+import top.rayc.personalsite.user.security.JwtTokenUtil
 
 @Component
 class JwtValidatorFilter: OncePerRequestFilter() {
-    private val TOKEN_HEADER_KEY = "Authorization"
-    private val LOGIN_PATH = "/login"
-    private val AUTHORIZATION_PREFIX = "Bearer"
+    companion object {
+        private const val TOKEN_HEADER_KEY = "Authorization"
+        private const val LOGIN_PATH = "/login"
+        private const val AUTHORIZATION_PREFIX = "Bearer"
+    }
 
     val log by LoggerDelegate()
 
@@ -28,35 +30,30 @@ class JwtValidatorFilter: OncePerRequestFilter() {
         filterChain: FilterChain
     ) {
         val claims = try {
-            log.error("response.header: ${request.getHeader(TOKEN_HEADER_KEY)}")
             JwtTokenUtil.getClaimsFromToken(request.getHeader(TOKEN_HEADER_KEY).substring(7), jwtSigningKey)
         } catch (e: Exception) {
             null
         }
         claims?.apply {
-            val username = claims.subject
-            val authorities = claims.get("role", List::class.java).map { SimpleGrantedAuthority(it as String) }.toList()
-
+            val username = claims["sub"] as String
+            val authorities = (claims.get("role", List::class.java) as List<*>).map { SimpleGrantedAuthority(it.toString()) }
+            val userId = claims["userId"] as Int
             val auth = UsernamePasswordAuthentication(username, null, authorities)
+            auth.details = userId.toLong()
             SecurityContextHolder.getContext().authentication = auth
         }
         filterChain.doFilter(request, response)
     }
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
-        log.error("request.path: ${request.servletPath}")
-        log.error("bearerToken: ${request.getHeader(TOKEN_HEADER_KEY)}")
-        log.error(request.getHeader(TOKEN_HEADER_KEY))
-
-        val bearerToken =  request.getHeader(TOKEN_HEADER_KEY) ?: return true
-//        if (bearerToken.isBlank() || bearerToken.startsWith(AUTHORIZATION_PREFIX)) {
-//            return true
-//        }
         val servletPath = request.servletPath
         if (servletPath.contains("druid") || servletPath.contains("doc.html") || LOGIN_PATH == servletPath) {
             return true
         }
-        log.error("准备验证: $bearerToken")
+        val bearerToken =  request.getHeader(TOKEN_HEADER_KEY) ?: return true
+        if (bearerToken.isBlank() || !bearerToken.startsWith(AUTHORIZATION_PREFIX)) {
+            return true
+        }
         return !JwtTokenUtil.validateToken(bearerToken.substring(7), jwtSigningKey)
 
     }

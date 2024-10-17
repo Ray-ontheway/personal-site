@@ -45,14 +45,19 @@ class UserService(
     override fun auth(username: String, password: String): UsernamePasswordAuthentication {
         logger.error("auth: {}, {}", username, password)
         val storeUser = this.getOne(KtQueryWrapper(User()).eq(User::email, username))
-        val encodePassword = passwordEncoder.encode(password)
         if (storeUser == null) {
             logger.error("storeUser is null")
+            throw RuntimeException("用户不存在")
         }
-        if (storeUser == null || !passwordEncoder.matches(password, storeUser.password)) {
+        if (!passwordEncoder.matches(password, storeUser.password)) {
             throw BadCredentialsException("用户名或密码错误")
         }
-        return UsernamePasswordAuthentication(username, password)
+
+        val authentication = UsernamePasswordAuthentication(username, password, userId = storeUser.id!!)
+        storeUser.password = ""
+        authentication.details = storeUser
+        logger.error("auth: {}", authentication)
+        return authentication
     }
 
     private val EMAIL_REGISTER_TEMPLATE = """

@@ -1,7 +1,9 @@
 package top.rayc.personalsite.article.controller
 
+import com.fasterxml.jackson.databind.ser.Serializers.Base
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -45,10 +47,16 @@ class ArticleController(
         return articleService.articleDetail(uid)
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/page")
     fun pageArticles(@RequestParam("pageIdx") pageIdx: Int,
                      @RequestParam("pageSize") pageSize: Int): ResponseEntity<BaseResult<PageObject<ArticleResp>>> {
         return articleService.pageArticles(pageIdx, pageSize)
+    }
+
+
+    fun articleDrafts(): ResponseEntity<BaseResult<List<ArticleResp>>> {
+        return articleService.articleDrafts()
     }
 
 }
