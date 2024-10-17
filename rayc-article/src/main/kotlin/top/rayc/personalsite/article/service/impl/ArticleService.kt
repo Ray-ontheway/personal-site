@@ -100,32 +100,44 @@ class ArticleService(
     override fun deleteArticle(id: Long): ResponseEntity<BaseResult<String>> {
         log.error("删除文章: $id")
         this.removeById(id)
-        articleTagLinkService.remove(KtQueryWrapper(ArticleTagLink::class.java)
-            .eq(ArticleTagLink::articleId, id)
-        )
+        articleTagLinkService.remove(KtQueryWrapper(ArticleTagLink::class.java).eq(ArticleTagLink::articleId, id))
         return ResponseEntity.ok().body(BaseResult.success("删除成功"))
     }
 
     override fun articleDetail(uid: String): ResponseEntity<BaseResult<ArticleResp>> {
-        val article = this.getOne(KtQueryWrapper(Article::class.java).eq(Article::uid, uid)) ?: throw RuntimeException("文章不存在")
+        val article = this.getOne(
+            KtQueryWrapper(Article::class.java).eq(Article::uid, uid).eq(Article::isDeleted, false)
+        ) ?: throw RuntimeException("文章不存在")
         return ResponseEntity.ok(BaseResult.success("查询成功", transformArticleToResp(article)))
     }
 
     override fun pageArticles(page: Int, size: Int): ResponseEntity<BaseResult<PageObject<ArticleResp>>> {
-        val articlePage = this.page(Page<Article>(page.toLong(), size.toLong()), KtQueryWrapper(Article::class.java).eq(Article::createBy, SecurityUtil.getCurrentUserId()))
+        val articlePage = this.page(
+            Page(page.toLong(), size.toLong()),
+            KtQueryWrapper(Article::class.java)
+                .eq(Article::createBy, SecurityUtil.getCurrentUserId())
+                .eq(Article::isPublished, true)
+        )
         val articleResps = articlePage.records.map { transformArticleToResp(it) }
-        val curUserId = SecurityUtil.getCurrentUserId()
-        log.error("当前用户: $curUserId")
         return ResponseEntity.ok(BaseResult.success("查询成功", PageObject(page, size, articlePage.total, articleResps)))
     }
 
     override fun articleDrafts(): ResponseEntity<BaseResult<List<ArticleResp>>> {
-        val drafts = this.list(KtQueryWrapper(Article::class.java).eq(Article::isPublished, false))
-        return ResponseEntity.ok(BaseResult.success("查询成功", drafts?.let { articleConverter.convertToRepsList(it) }))
+        val drafts = this.list(
+            KtQueryWrapper(Article::class.java)
+                .eq(Article::isPublished, false)
+                .eq(Article::createBy, SecurityUtil.getCurrentUserId())
+                .eq(Article::isDeleted, false))
+        val draftsResps = drafts.map { transformArticleToResp(it) }
+        return ResponseEntity.ok(BaseResult.success("查询成功", draftsResps))
     }
 
     override fun articleEssayPage(pageIdx: Long, pageSize: Long): ResponseEntity<BaseResult<PageObject<ArticleResp>>> {
-        val articlePage = this.page(Page<Article>(pageIdx, pageSize))
+        val queryWrapper = KtQueryWrapper(Article::class.java)
+            .eq(Article::createBy, SecurityUtil.getCurrentUserId())
+            .eq(Article::isDeleted, false)
+            .eq(Article::isPublished, true)
+        val articlePage = this.page(Page(pageIdx, pageSize), queryWrapper)
         val articleResps = articlePage.records.map { transformArticleToResp(it) }
 
         return ResponseEntity.ok(BaseResult.success("查询成功", PageObject(pageIdx.toInt(), pageSize.toInt(), articlePage.total, articleResps)))

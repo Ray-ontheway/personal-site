@@ -33,7 +33,7 @@ data class ArticleCreate (
     val cover: String? = null,
     val typeId: Long,
     val tagIds: List<Long>,
-    val isPublished: Boolean = true
+    val isPublished: Boolean,
 )
 
 data class ArticleUpdate (

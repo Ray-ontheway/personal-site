@@ -46,8 +46,16 @@ class ArticleController(
     }
 
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/drafts")
     fun articleDrafts(): ResponseEntity<BaseResult<List<ArticleResp>>> {
         return articleService.articleDrafts()
+    }
+
+    @GetMapping("/essays")
+    fun articleEssaysPage(@RequestParam("pageIdx") pageIdx: Long,
+                          @RequestParam("pageSize") pageSize: Long): ResponseEntity<BaseResult<PageObject<ArticleResp>>> {
+        return articleService.articleEssayPage(pageIdx, pageSize)
     }
 
 }
