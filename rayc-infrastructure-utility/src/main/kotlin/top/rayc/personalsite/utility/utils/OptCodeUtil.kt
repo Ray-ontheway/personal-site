@@ -2,7 +2,6 @@ package top.rayc.personalsite.utility.utils
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.convert.RedisData
-import org.springframework.data.redis.core.script.RedisScript
 import org.springframework.stereotype.Component
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random

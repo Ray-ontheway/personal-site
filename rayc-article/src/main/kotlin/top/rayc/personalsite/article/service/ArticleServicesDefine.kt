@@ -5,8 +5,6 @@ import top.rayc.personalsite.article.controller.vo.req.*
 import top.rayc.personalsite.article.controller.vo.resp.ArticleResp
 import top.rayc.personalsite.article.controller.vo.resp.ArticleTagResp
 import top.rayc.personalsite.article.controller.vo.resp.ArticleTypeResp
-import top.rayc.personalsite.article.entity.ArticleTag
-import top.rayc.personalsite.article.entity.ArticleType
 import top.rayc.personalsite.utility.page.PageObject
 import top.rayc.personalsite.utility.vo.BaseResult
 

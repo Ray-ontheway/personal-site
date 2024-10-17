@@ -1,7 +1,6 @@
 package top.rayc.personalsite.user.converter
 
 import org.mapstruct.Mapper
-import org.mapstruct.factory.Mappers
 import top.rayc.personalsite.user.controller.vo.req.RoleCreateReq
 import top.rayc.personalsite.user.controller.vo.req.RoleUpdateReq
 import top.rayc.personalsite.user.controller.vo.req.UserCreateReq

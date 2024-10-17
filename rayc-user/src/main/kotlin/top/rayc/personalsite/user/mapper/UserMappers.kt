@@ -2,10 +2,6 @@ package top.rayc.personalsite.user.mapper
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper
 import org.apache.ibatis.annotations.Mapper
-import org.apache.ibatis.annotations.Param
-import org.springframework.web.bind.annotation.RequestParam
-import top.rayc.personalsite.user.controller.vo.resp.RoleResp
-import top.rayc.personalsite.user.controller.vo.resp.UserResp
 import top.rayc.personalsite.user.entity.*
 
 @Mapper

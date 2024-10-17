@@ -1,7 +1,5 @@
 package top.rayc.personalsite.user.controller.vo.req
 
-import java.time.LocalDateTime
-
 data class UserCreateReq(
     var email: String,
     var password: String,

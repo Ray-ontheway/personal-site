@@ -18,12 +18,12 @@ import java.nio.charset.StandardCharsets
 import kotlin.jvm.Throws
 
 class JwtGeneratorFilter(
-    val manager: AuthenticationManager,
-    val jwtSigningKey: String = ".ymLTU8rq83j4fmJZj60wh4OrMNuntIj4fmJ1refreywscascsa",
-    val jwtDuration: Long = 1000 * 60 * 60 * 24 * 7
+    private val manager: AuthenticationManager,
+    private val jwtSigningKey: String = ".ymLTU8rq83j4fmJZj60wh4OrMNuntIj4fmJ1refreywscascsa",
+    private val jwtDuration: Long = 1000 * 60 * 60 * 24 * 7
 ): OncePerRequestFilter() {
 
-    val log by LoggerDelegate()
+    private val log by LoggerDelegate()
 
     override fun doFilterInternal(
         request: HttpServletRequest,
